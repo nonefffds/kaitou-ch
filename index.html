@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Vote Page</title>
+  <style>
+    /* CSS styles for the elements */
+    #banner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #logo {
+      width: 200px;
+    }
+    #link {
+      margin-left: auto;
+      padding: 10px;
+    }
+    #progress-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 30px;
+    }
+    #progress-bar {
+      width: 300px;
+      height: 20px;
+      background-color: red;
+      margin-bottom: 10px;
+    }
+    #question {
+      width: 300px;
+    }
+    #buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .button {
+      margin: 10px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="banner">
+    <img id="logo" src="logo.png" alt="Logo">
+    <a id="link" href="#">Link</a>
+  </div>
+  
+  <div id="progress-wrapper">
+    <img id="question" src="question.png" alt="Question">
+    <div id="progress-bar"></div>
+  </div>
+  
+  <div id="buttons">
+    <button class="button" id="yes-button">Yes</button>
+    <button class="button" id="no-button">No</button>
+  </div>
+  
+  <script>
+    // JavaScript code to handle voting logic and update the progress bar
+    const yesButton = document.getElementById("yes-button");
+    const noButton = document.getElementById("no-button");
+    const progressBar = document.getElementById("progress-bar");
+
+    // Replace the following values with your actual vote counts
+    const yesVotes = 30;
+    const totalVotes = 100;
+
+    // Calculate the percentage of Yes votes
+    const percentage = (yesVotes / totalVotes) * 100;
+
+    // Set the width of the progress bar based on the percentage
+    progressBar.style.width = `${percentage}%`;
+
+    // Event listeners for voting buttons
+    yesButton.addEventListener("click", () => {
+      // Handle Yes vote
+      alert("You voted Yes!");
+    });
+
+    noButton.addEventListener("click", () => {
+      // Handle No vote
+      alert("You voted No!");
+    });
+  </script>
+</body>
+</html>
