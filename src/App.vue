@@ -49,20 +49,21 @@
           console.error(error)
         }
       }
-  
       const fetchData = async () => {
-        try {
-          const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote')
-          const votes = response.data.split("-")
-          const percent = Math.floor((parseInt(votes[Yes]) / parseInt(votes[No]) + parseInt(votes[Yes])) * 250)
-          progress.value = percent / 2.5
-          P5Message({ type: 'clear' })
-        } catch (error) {
-          console.error(error)
-          P5Message({ type: 'fail' })
-        }
+      try {
+        const response = await axios.get('API_URL', {
+          data: {
+            httpMethod: 'GET'
+          }
+        })
+        const data = JSON.parse(response.data.body)
+        yesVotes.value = data.Yes
+        noVotes.value = data.No
+        progress = Math.floor(yesVotes.value / (yesVotes.value + noVotes.value) * 100)
+      } catch (error) {
+        console.error(error)
       }
-  
+    }
       onMounted(() => {
         fetchData()
       })
