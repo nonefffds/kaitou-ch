@@ -54,7 +54,7 @@
         const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote', {
           data: {
             httpMethod: 'GET'
-          }
+          },
           headers: {
           'Access-Control-Allow-Origin': 'https://kaitou-ch.site',
           'Access-Control-Allow-Headers': 'Content-Type',
