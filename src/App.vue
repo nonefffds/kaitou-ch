@@ -37,7 +37,11 @@
         try {
           await axios.post('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote', {
             vote
-          })
+          },
+          {
+            withCredentials: true
+          }
+      )
           fetchData()
         } catch (error) {
           console.error(error)
@@ -50,8 +54,10 @@
           const votes = response.data.split("-")
           const percent = Math.floor((parseInt(votes[0]) / parseInt(votes[1])) * 250)
           progress.value = percent / 2.5
+          P5Message({ type: 'clear' })
         } catch (error) {
           console.error(error)
+          P5Message({ type: 'fail' })
         }
       }
   
