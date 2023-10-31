@@ -2,6 +2,7 @@
   <div class="wrapper">
     <div class="container">
       <img class="logo" src="./assets/logo.png">
+      <p5-divider></p5-divider>
       <div class="poll">
         <img class="bolt1" src="./assets/bolt1.png">
         <img class="bolt2" src="./assets/bolt2.png">
@@ -53,7 +54,7 @@
         try {
           const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote')
           const votes = response.data.split("-")
-          const percent = Math.floor((parseInt(votes[0]) / parseInt(votes[1])) * 250)
+          const percent = Math.floor((parseInt(votes[Yes]) / parseInt(votes[No]) + parseInt(votes[Yes])) * 250)
           progress.value = percent / 2.5
           P5Message({ type: 'clear' })
         } catch (error) {
