@@ -55,6 +55,12 @@
           data: {
             httpMethod: 'GET'
           }
+          headers: {
+          'Access-Control-Allow-Origin': 'https://kaitou-ch.site',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET, POST',
+          'Access-Control-Allow-Credentials': 'true'
+        }
         })
         const data = JSON.parse(response.data.body)
         yesVotes.value = data.Yes
