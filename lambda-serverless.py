@@ -57,13 +57,8 @@ def update_vote_count(vote_count):
         response = s3_client.get_object(Bucket=bucket_name, Key=file_name)
         vote_count_json = response['Body'].read().decode('utf-8')
         vote_count_data = json.loads(vote_count_json)
-        if 'Yes' in vote_count_data:
-            vote_count_data['Yes'] = vote_count_data.get('Yes', 0) + 1
-            updated_vote_count_json = json.dumps(vote_count_data)
-            s3_client.put_object(Bucket=bucket_name, Key=file_name, Body=updated_vote_count_json)
-            return True
-        elif 'No' in vote_count_data:
-            vote_count_data['No'] = vote_count_data.get('No', 0) + 1
+        if vote_count in vote_count_data:
+            vote_count_data[vote_count] = vote_count_data.get(vote_count, 0) + 1
             updated_vote_count_json = json.dumps(vote_count_data)
             s3_client.put_object(Bucket=bucket_name, Key=file_name, Body=updated_vote_count_json)
             return True
