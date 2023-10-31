@@ -51,7 +51,7 @@
       }
       const fetchData = async () => {
       try {
-        const response = await axios.get('API_URL', {
+        const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote', {
           data: {
             httpMethod: 'GET'
           }
