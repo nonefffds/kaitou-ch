@@ -27,6 +27,7 @@
   <script>
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
+  import { P5Message } from 'p5-ui'
   
   export default {
     name: 'App',
