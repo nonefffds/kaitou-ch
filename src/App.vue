@@ -7,7 +7,7 @@
         <img class="bolt1" src="./assets/bolt1.png">
         <img class="bolt2" src="./assets/bolt2.png">
         <img class="wrap" src="./assets/Q.png">
-        <div class="bar""></div>
+        <div class="bar" id="bar"></div>
         <div class="question">
           你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？
         </div>
@@ -47,12 +47,12 @@
         const numberDisplay = document.getElementById("percentage");
         numberDisplay.innerHTML = percentage + "%";
         // Get the div element with class "bar"
-        const barElement = document.querySelector(".bar");
+        const barElement = document.getElementById("bar");
 
         // Set the style properties of the div element
         barElement.style.width = percentage.value + "%";
         barElement.style.maxWidth = "220px";
-        
+
         console.log('Progress:', percentage);
       } catch (error) {
         console.error('Error fetching data:', error);
