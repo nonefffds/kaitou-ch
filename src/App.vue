@@ -56,8 +56,8 @@
 
     // Process the data here
     const { Yes, No } = data;
-    yesVotes.value = Yes;
-    noVotes.value = No;
+    //yesVotes.value = Yes;
+    //noVotes.value = No;
     const progress = Math.floor(Yes / (Yes + No) * 100);
     console.log('Progress:', progress);
   } catch (error) {
