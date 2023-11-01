@@ -24,44 +24,21 @@
     </div>
   </div>
 </template>
-  
-  <script>
-  import { ref, onMounted } from 'vue'
-  import axios from 'axios'
-  //import { P5Message } from 'p5-ui'
-  
-  export default {
-  name: 'App',
+<script>
+import { ref, onMounted } from "vue";
+
+export default {
   setup() {
-    const progress = ref(0); // Declare progress here
-    const percentage = ref(0);
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
-        const data = response.data;
+    const percentage = 50;  // Hard-coded percentage value
 
-        const { Yes, No } = data;
-        progress.value = Math.floor(Yes / (Yes + No) * 100);
-        percentage = progress.value // Update progress value here
-        console.log('Progress:', progress.value);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
+    const postOption = (option) => {
+      console.log(`User selected: ${option}`);
+    };
 
-
-      onMounted(() => {
-        fetchData()
-      })
-  
-      return {
-        progress,
-        percentage,
-        postOption
-      }
-    }
-  }
-  </script>
+    return { percentage, postOption };
+  },
+};
+</script>
   
   <style>
   .wrapper {
