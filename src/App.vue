@@ -7,11 +7,11 @@
         <img class="bolt1" src="./assets/bolt1.png">
         <img class="bolt2" src="./assets/bolt2.png">
         <img class="wrap" src="./assets/Q.png">
-        <div class="bar" :style="{ width: progress + '%' }"></div>
+        <div class="bar" :style="{ width: progress.value + '%' }"></div>
         <div class="question">
           你认为怪盗团是<span style="red;font-size: 16px;">清白</span>的吗？
         </div>
-        <span class="percent">{{ progress }}%</span>
+        <span class="percent">{{ progress.value }}%</span>
       </div>
       <div class="buttons">
         <p5-button>
