@@ -54,17 +54,7 @@
             const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote')
             const responseData = response.data.body;
             let data;
-            
-            if (typeof responseData === 'object') {
-              data = responseData;
-            } else {
-            try {
-              data = JSON.parse(responseData);
-            } catch (error) {
-            console.error('Error parsing response data:', error);
-            return;
-            }
-            }
+            data = responseData;
             
             // Process the parsed data here
             yesVotes.value = data.Yes;
