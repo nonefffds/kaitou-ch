@@ -9,7 +9,7 @@
         <img class="wrap" src="./assets/Q.png">
         <div class="bar" id="bar"></div>
         <div class="question">
-          {{ getQuestion() }}
+          你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？
         </div>
         <span class="percent" id="percentage"></span>
       </div>
@@ -35,36 +35,8 @@
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
   import { P5Message,P5Notification } from 'p5-ui'
-  //import { VueReCaptcha } from 'vue-recaptcha-v3'
 
   export default {
-    methods: {
-    getQuestion() {
-      const currentDate = new Date();
-      const month = currentDate.getMonth() + 1;
-      const day = currentDate.getDate();
-
-      // Change the question based on the date
-      if (month === 4 && day === 15) {
-        return `你相信<span style='color: red; font-size: 16px;'>心灵怪盗</span>吗？`;
-      } else if (month === 6 && day === 11) {
-        return `你认为怪盗团拥有<span style='color: red; font-size: 16px;'>正义</span>吗？`;
-      } else if (month === 10 && day === 29) {
-        return `你认为怪盗团是<span style='color: red; font-size: 16px;'>清白</span>的吗？`;
-      } else if (month === 12 && day === 7) {
-        return `你会<span style='color: red; font-size: 16px;'>支持怪盗团</span>吗？`;
-      } else if (month === 12 && day === 19) {
-        return `你认为怪盗团是<span style='color: red; font-size: 16px;'>真实存在</span>的吗？`;
-      } else if (month === 1 && day === 1) {
-        return `你会想<span style='color: red; font-size: 16px;'>加入怪盗团</span>吗？`;
-      } else {
-        return `你会想<span style='color: red; font-size: 16px;'>加入怪盗团</span>吗？`;
-      }
-
-
-
-    },
-  },
   name: 'App',
   setup() {
     let progress = ref(0); // Declare progress here
