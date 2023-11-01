@@ -50,7 +50,7 @@
         const barElement = document.getElementById("bar");
 
         // Set the style properties of the div element
-        barElement.style.width = percentage.value + "%";
+        barElement.style.width = percentage + "%";
         barElement.style.maxWidth = "220px";
 
         console.log('Progress:', percentage);
