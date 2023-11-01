@@ -54,11 +54,11 @@
             const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote')
             const responseData = response.data.body;
             let data;
-            data = responseData;
+            data = json.loads(responseData);
             
             // Process the parsed data here
-            yesVotes.value = data.Yes;
-            noVotes.value = data.No;
+            yesVotes.value = data["Yes"];
+            noVotes.value = data["No"];
             progress = Math.floor(yesVotes.value / (yesVotes.value + noVotes.value) * 100);
           } catch (error) {
             console.error('Error fetching data:', error);
