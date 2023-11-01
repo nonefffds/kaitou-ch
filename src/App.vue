@@ -11,7 +11,7 @@
         <div class="question">
           你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？
         </div>
-        <span class="percent">{{ percentage }}%</span>
+        <span class="percent" id="percentage"></span>
       </div>
       <div class="buttons">
         <p5-button>
@@ -43,6 +43,10 @@
         const { Yes, No } = data;
         progress.value = Math.floor(Yes / (Yes + No) * 100);
         percentage = progress.value;
+
+        const numberDisplay = document.getElementById("percentage");
+        numberDisplay.innerHTML = percentage.value + "%";
+
         console.log('Progress:', percentage);
       } catch (error) {
         console.error('Error fetching data:', error);
