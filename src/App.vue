@@ -31,38 +31,22 @@
   import { P5Message } from 'p5-ui'
   
   export default {
-    name: 'App',
-    setup() {
-      //const progress = ref(0)
-  
-      const postOption = async (vote) => {
-        try {
-          await axios.post('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote', {
-            vote
-          },
-          {
-            withCredentials: true
-          }
-      )
-          fetchData()
-        } catch (error) {
-          console.error(error)
-        }
-      }
-      const fetchData = async () => {
-  try {
-    const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
-    const data = response.data;
+  name: 'App',
+  setup() {
+    const progress = ref(0); // Declare progress here
 
-    // Process the data here
-    const { Yes, No } = data;
-    //yesVotes.value = Yes;
-    //noVotes.value = No;
-    const progress = Math.floor(Yes / (Yes + No) * 100);
-    console.log('Progress:', progress);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
+        const data = response.data;
+
+        const { Yes, No } = data;
+        progress.value = Math.floor(Yes / (Yes + No) * 100); // Update progress value here
+        console.log('Progress:', progress.value);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
 }
 
 
