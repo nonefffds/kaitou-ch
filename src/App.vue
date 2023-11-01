@@ -49,7 +49,7 @@
         const elapsedTime = currentTime - parseInt(lastVoteTime);
 
         if (elapsedTime < 60000) {
-          P5Notification({content: '操作频繁，请稍后再试', character, top})
+          P5Notification({content: '操作频繁，请稍后再试'})
           console.log("You can only vote once per minute.");
           return;
         }
