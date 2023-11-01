@@ -33,6 +33,7 @@
   export default {
     name: 'App',
     setup() {
+      //const progress = ref(0)
   
       const postOption = async (vote) => {
         try {
@@ -51,7 +52,7 @@
       const fetchData = async () => {
   try {
     const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
-    const data = response.data.body;
+    const data = response.data;
 
     // Process the data here
     const { Yes, No } = data;
@@ -63,6 +64,7 @@
     console.error('Error fetching data:', error);
   }
 }
+
 
       onMounted(() => {
         fetchData()
