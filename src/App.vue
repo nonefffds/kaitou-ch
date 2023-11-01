@@ -22,6 +22,10 @@
    </p5-button>
 </div>
 </div>
+<div class="footer">
+      <p style="color: grey;">Powered by AWS Lambda, Vercel, Vue.JS & p5-ui. Maintained by MPAM Lab. </p>
+      <p style="color: grey;">Original Credit by (c)Atlus, SEGA</p>
+    </div>
 </div>
 </template>
 
@@ -38,6 +42,18 @@
     let percentage = ref(0);
 
     const postOption = async (option) => {
+      const lastVoteTime = getCookie("LastVoteTime"); // Get the value of the "LastVoteTime" cookie
+
+      if (lastVoteTime) {
+        const currentTime = new Date().getTime(); // Get the current time
+        const elapsedTime = currentTime - parseInt(lastVoteTime);
+
+        if (elapsedTime < 60000) {
+          console.log("You can only vote once per minute.");
+          return;
+        }
+      }
+
       const data = {
         httpMethod: "POST",
         body: {
@@ -53,7 +69,21 @@
         P5Message({ type: 'fail' })
       }
     }
+    // Function to get the value of a cookie
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
 
+    // Function to set a cookie
+    function setCookie(name, value, minutes) {
+      const d = new Date();
+      d.setTime(d.getTime() + (minutes * 60 * 1000));
+      const expires = "expires=" + d.toUTCString();
+      document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+    
     const fetchData = async () => {
       try {
         const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
