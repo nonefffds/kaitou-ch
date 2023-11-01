@@ -13,28 +13,47 @@
         </div>
         <span class="percent" id="percentage"></span>
       </div>
-      <div class="buttons">
-        <p5-button>
-        <p5-title content="是" :animation="true" font_color="#ff0022"  selected_font_color="#000" _bg_color="#ff0022" @click="postOption(Yes)"></p5-title>
-        </p5-button>
-        <p5-button>
-        <p5-title content="不是" :animation="true" font_color="#ff0022"  selected_font_color="#000" selected_bg_color="#ff0022" @click="postOption(No)"></p5-title>
-        </p5-button>
-      </div>
-    </div>
-  </div>
+<div class="buttons">
+   <p5-button>
+      <p5-title content="是" :animation="true" font_color="#ff0022" selected_font_color="#000" _bg_color="#ff0022" @click="postOption('Yes')"></p5-title>
+   </p5-button>
+   <p5-button>
+      <p5-title content="不是" :animation="true" font_color="#ff0022" selected_font_color="#000" selected_bg_color="#ff0022" @click="postOption('No')"></p5-title>
+   </p5-button>
+</div>
+</div>
+</div>
 </template>
+
   
   <script>
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
-  //import { P5Message } from 'p5-ui'
+  import { P5Message } from 'p5-ui'
   
   export default {
   name: 'App',
   setup() {
     let progress = ref(0); // Declare progress here
     let percentage = ref(0);
+
+    const postOption = async (option) => {
+      const data = {
+        httpMethod: "POST",
+        body: {
+          option: option
+        }
+      };
+      try {
+        await axios.post('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote', data);
+        console.log(`Option ${option} posted successfully.`);
+        P5Message({ type: 'clear' })
+      } catch (error) {
+        console.error('Error posting option:', error);
+        P5Message({ type: 'fail' })
+      }
+    }
+
     const fetchData = async () => {
       try {
         const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
