@@ -62,6 +62,9 @@
         await axios.post('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote', data);
         console.log(`Option ${option} posted successfully.`);
         P5Message({ type: 'clear' })
+        fetchData();
+        const currentTime = new Date().getTime();
+        setCookie("LastVoteTime", currentTime, 1);
       } catch (error) {
         console.error('Error posting option:', error);
         P5Message({ type: 'fail' })
