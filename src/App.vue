@@ -7,11 +7,11 @@
         <img class="bolt1" src="./assets/bolt1.png">
         <img class="bolt2" src="./assets/bolt2.png">
         <img class="wrap" src="./assets/Q.png">
-        <div class="bar" :style="{ width: progress + '%', 'max-width': '220px' }"></div>
+        <div class="bar" :style="{ width: percentage + '%', 'max-width': '220px' }"></div>
         <div class="question">
           你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？
         </div>
-        <span class="percent">{{ progress }}%</span>
+        <span class="percent">{{ percentage }}%</span>
       </div>
       <div class="buttons">
         <p5-button>
@@ -41,7 +41,8 @@
         const data = response.data;
 
         const { Yes, No } = data;
-        progress.value = Math.floor(Yes / (Yes + No) * 100); // Update progress value here
+        progress.value = Math.floor(Yes / (Yes + No) * 100);
+        percentage = progress.value // Update progress value here
         console.log('Progress:', progress.value);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -55,6 +56,7 @@
   
       return {
         progress,
+        percentage,
         postOption
       }
     }
