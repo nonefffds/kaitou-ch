@@ -23,7 +23,7 @@
 </div>
 </div>
 <div class="footer">
-      <p style="color: grey;">Powered by AWS Lambda, Vercel, Vue.JS & p5-ui. Maintained by MPAM Lab. </p>
+      <p style="color: grey;">Powered by <a href="https://aws.amazon.com/">AWS Lambda & Amplify</a>, <a href="https://vuejs.org/">Vue.JS</a> & <a href="https://github.com/q-mona/p5-ui">p5-ui</a>p5-ui. Maintained by <a href="http://MPAM-Lab.xyz">MPAM Lab</a>. </p>
       <p style="color: grey;">Original Credit by (c)Atlus, SEGA</p>
     </div>
 </div>
@@ -150,6 +150,7 @@
     width: 300px;
     margin-top: 60px;
     position: relative;
+    left: -5%;
   }
   
   .poll .wrap {
