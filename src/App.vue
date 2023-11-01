@@ -9,13 +9,13 @@
         <img class="wrap" src="./assets/Q.png">
         <div class="bar" :style="{ width: progress + '%', 'max-width': '220px' }"></div>
         <div class="question">
-          你认为怪盗团是<span style="red;font-size: 16px;">清白</span>的吗？
+          你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？
         </div>
         <span class="percent">{{ progress }}%</span>
       </div>
       <div class="buttons">
         <p5-button>
-        <p5-title content="是" :animation="true" font_color="#ff0022"  selected_font_color="#000" selected_bg_color="#ff0022" @click="postOption(Yes)"></p5-title>
+        <p5-title content="是" :animation="true" font_color="#ff0022"  selected_font_color="#000" _bg_color="#ff0022" @click="postOption(Yes)"></p5-title>
         </p5-button>
         <p5-button>
         <p5-title content="不是" :animation="true" font_color="#ff0022"  selected_font_color="#000" selected_bg_color="#ff0022" @click="postOption(No)"></p5-title>
@@ -23,12 +23,12 @@
       </div>
     </div>
   </div>
-  </template>
+</template>
   
   <script>
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
-  import { P5Message } from 'p5-ui'
+  //import { P5Message } from 'p5-ui'
   
   export default {
   name: 'App',
