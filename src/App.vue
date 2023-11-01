@@ -51,15 +51,25 @@
       }
       const fetchData = async () => {
       try {
-        const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote')
-        const data = JSON.parse(response.data.body)
-        yesVotes.value = data.Yes
-        noVotes.value = data.No
-        progress = Math.floor(yesVotes.value / (yesVotes.value + noVotes.value) * 100)
-      } catch (error) {
-        console.error(error)
-      }
-    }
+            const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote')
+            const responseData = response.data.body;
+            let data;
+            
+            try {
+              data = JSON.parse(responseData);
+            } catch (error) {
+              console.error('Error parsing response data:', error);
+              return;
+            }
+            
+            // Process the parsed data here
+            yesVotes.value = data.Yes;
+            noVotes.value = data.No;
+            progress = Math.floor(yesVotes.value / (yesVotes.value + noVotes.value) * 100);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+  }
       onMounted(() => {
         fetchData()
       })
