@@ -33,7 +33,7 @@
   <script>
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
-  import { P5Message } from 'p5-ui'
+  import { P5Message,P5Notification } from 'p5-ui'
   
   export default {
   name: 'App',
@@ -49,15 +49,14 @@
         const elapsedTime = currentTime - parseInt(lastVoteTime);
 
         if (elapsedTime < 60000) {
+          P5Notification({content: '操作频繁，请稍后再试', character, top})
           console.log("You can only vote once per minute.");
           return;
         }
       }
 
       const data = {
-        body: {
           option: option
-        }
       };
       try {
         await axios.post('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote', data);
