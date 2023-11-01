@@ -34,7 +34,6 @@
   name: 'App',
   setup() {
     const progress = ref(0); // Declare progress here
-
     const fetchData = async () => {
       try {
         const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
@@ -42,7 +41,7 @@
 
         const { Yes, No } = data;
         progress.value = Math.floor(Yes / (Yes + No) * 100);
-        percentage = progress.value // Update progress value here
+        const percentage = progress.value // Update progress value here
         console.log('Progress:', progress.value);
       } catch (error) {
         console.error('Error fetching data:', error);
