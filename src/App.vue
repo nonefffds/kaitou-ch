@@ -83,7 +83,7 @@
       const expires = "expires=" + d.toUTCString();
       document.cookie = name + "=" + value + ";" + expires + ";path=/";
     }
-    
+
     const fetchData = async () => {
       try {
         const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
@@ -208,5 +208,9 @@
   .question span {
     color: red;
   }
+  .footer {
+  font-size: 10px;
+  margin-top: 100px;
+}
   </style>
   
