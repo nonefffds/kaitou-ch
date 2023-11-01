@@ -20,10 +20,11 @@
    <p5-button>
       <p5-title content="不是" :animation="true" font_color="#ff0022" selected_font_color="#000" selected_bg_color="#ff0022" @click="postOption('No')"></p5-title>
    </p5-button>
+   <vue-recaptcha sitekey="recaptchaSiteKey" v-model="recaptchaToken"></vue-recaptcha>
 </div>
 </div>
 <div class="footer">
-      <p style="color: grey;">Powered by <a href="https://aws.amazon.com/">AWS Lambda & Amplify</a>, <a href="https://vuejs.org/">Vue.JS</a> & <a href="https://github.com/q-mona/p5-ui">p5-ui</a>p5-ui. Maintained by <a href="http://MPAM-Lab.xyz">MPAM Lab</a>. </p>
+      <p style="color: grey;">Powered by <a href="https://aws.amazon.com/">AWS Lambda & Amplify</a>, <a href="https://vuejs.org/">Vue.JS</a> & <a href="https://github.com/q-mona/p5-ui">p5-ui</a>. Maintained by <a href="http://MPAM-Lab.xyz">MPAM Lab</a>. </p>
       <p style="color: grey;">Original Credit by (c)Atlus, SEGA</p>
     </div>
 </div>
@@ -34,8 +35,17 @@
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
   import { P5Message,P5Notification } from 'p5-ui'
-  
+  import { VueReCaptcha } from 'vue-recaptcha-v3'
+
   export default {
+    components: {
+    VueReCaptcha,
+  },
+  data() {
+    return {
+      recaptchaSiteKey: '6Le7ZOMoAAAAALvBLqYtNfeq2wO982VoJJLcHLxu',
+    };
+  },
   name: 'App',
   setup() {
     let progress = ref(0); // Declare progress here
@@ -54,7 +64,7 @@
           return;
         }
       }
-
+      const recaptchaToken = await this.$recaptcha('action_name');
       const data = {
           option: option
       };
