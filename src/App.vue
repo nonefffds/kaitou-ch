@@ -55,11 +55,15 @@
             const responseData = response.data.body;
             let data;
             
+            if (typeof responseData === 'object') {
+              data = responseData;
+            } else {
             try {
               data = JSON.parse(responseData);
             } catch (error) {
-              console.error('Error parsing response data:', error);
-              return;
+            console.error('Error parsing response data:', error);
+            return;
+            }
             }
             
             // Process the parsed data here
