@@ -33,7 +33,6 @@
   export default {
     name: 'App',
     setup() {
-      const progress = ref(0)
   
       const postOption = async (vote) => {
         try {
@@ -64,6 +63,7 @@
     console.error('Error fetching data:', error);
   }
 }
+
       onMounted(() => {
         fetchData()
       })
