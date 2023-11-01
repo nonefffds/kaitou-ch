@@ -12,6 +12,7 @@ export default defineConfig({
     }
   },
   server: {
+    fallback: false, // Disable fallback behavior
     proxy: {
       '/api': {
         target: 'https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com',
