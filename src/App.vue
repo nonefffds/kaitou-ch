@@ -34,7 +34,7 @@
   name: 'App',
   setup() {
     const progress = ref(0); // Declare progress here
-    const percentage = ref(0);
+    let percentage = ref(0);
     const fetchData = async () => {
       try {
         const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
