@@ -45,7 +45,7 @@
         percentage = progress.value;
 
         const numberDisplay = document.getElementById("percentage");
-        numberDisplay.innerHTML = percentage.value + "%";
+        numberDisplay.innerHTML = percentage + "%";
 
         console.log('Progress:', percentage);
       } catch (error) {
