@@ -55,7 +55,6 @@
       }
 
       const data = {
-        httpMethod: "POST",
         body: {
           option: option
         }
