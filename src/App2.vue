@@ -1,35 +1,17 @@
 <template>
   <div class="wrapper">
     <div class="container">
-      <img class="logo" src="./assets/logo.png">
-      <p5-divider></p5-divider>
-      <div class="poll">
-        <img class="bolt1" src="./assets/bolt1.png">
-        <img class="bolt2" src="./assets/bolt2.png">
-        <img class="wrap" src="./assets/Q.png">
-        <div class="bar" :style="{ width: percentage + '%', 'max-width': '220px' }"></div>
-        <div class="question">
-          你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？
-        </div>
         <span class="percent">{{ percentage }}%</span>
-      </div>
-      <div class="buttons">
-        <p5-button>
-        <p5-title content="是" :animation="true" font_color="#ff0022"  selected_font_color="#000" _bg_color="#ff0022" @click="postOption(Yes)"></p5-title>
-        </p5-button>
-        <p5-button>
-        <p5-title content="不是" :animation="true" font_color="#ff0022"  selected_font_color="#000" selected_bg_color="#ff0022" @click="postOption(No)"></p5-title>
-        </p5-button>
       </div>
     </div>
   </div>
 </template>
 <script>
 import { ref, onMounted } from "vue";
-
 export default {
+  
   setup() {
-    const percentage = 50;  // Hard-coded percentage value
+    let percentage = 50;  // Hard-coded percentage value
 
     const postOption = (option) => {
       console.log(`User selected: ${option}`);
