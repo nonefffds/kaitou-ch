@@ -41,6 +41,9 @@
   setup() {
     let progress = ref(0); // Declare progress here
     let percentage = ref(0);
+    const env = {
+       API: process.env.API_ENDPOINT
+      }
 
     const postOption = async (option) => {
       const lastVoteTime = getCookie("LastVoteTime"); // Get the value of the "LastVoteTime" cookie
@@ -59,7 +62,7 @@
           option: option
       };
       try {
-        await axios.post(process.env.API_ENDPOINT, data);
+        await axios.post(env.API, data);
         console.log(`Option ${option} posted successfully.`);
         P5Message({ type: 'clear' })
         fetchData();
@@ -87,7 +90,7 @@
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(process.env.API_ENDPOINT);
+        const response = await axios.get(env.API);
         const data = response.data;
 
         const { Yes, No } = data;
