@@ -96,8 +96,8 @@
         const numberDisplay = document.getElementById("percentage");
         numberDisplay.innerHTML = percentage + "%";
 
-        const numberDisplay = document.getElementById("debug");
-        numberDisplay.innerHTML = "Yes: " + Yes + " No: " + No， "Total: " + (Yes + No);
+        const debugDisplay = document.getElementById("debug");
+        debugDisplay.innerHTML = "Yes: " + Yes + " No: " + No +",Total: " + (Yes + No);
         // Get the div element with class "bar"
         const barElement = document.getElementById("bar");
 
