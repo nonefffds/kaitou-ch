@@ -24,6 +24,7 @@
 </div>
 <div class="footer">
       <p style="color: grey;" id="debug"></p>
+      <!--<p style="color: grey;" id="date"></p>-->
       <p style="color: grey;">Powered by <a href="https://aws.amazon.com/">AWS Lambda & Amplify</a>, <a href="https://vuejs.org/">Vue.JS</a> & <a href="https://github.com/q-mona/p5-ui">p5-ui</a>. Maintained by <a href="http://MPAM-Lab.xyz">MPAM Lab</a>. </p>
       <p style="color: grey;">Original Credit by (c)Atlus, SEGA</p>
     </div>
@@ -34,7 +35,7 @@
   <script>
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
-  import { P5Message,P5Notification } from 'p5-ui'
+  import { P5Message } from 'p5-ui'
   export default {
   name: 'App',
   setup() {
@@ -49,7 +50,7 @@
         const elapsedTime = currentTime - parseInt(lastVoteTime);
 
         if (elapsedTime < 60000) {
-          P5Notification({content: '操作频繁，请稍后再试'})
+          P5Message({ type: 'fail' })
           console.log("You can only vote once per minute.");
           return;
         }
@@ -58,7 +59,7 @@
           option: option
       };
       try {
-        await axios.post('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote', data);
+        await axios.post(process.env.API_ENDPOINT, data);
         console.log(`Option ${option} posted successfully.`);
         P5Message({ type: 'clear' })
         fetchData();
@@ -86,7 +87,7 @@
 
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
+        const response = await axios.get(process.env.API_ENDPOINT);
         const data = response.data;
 
         const { Yes, No } = data;
