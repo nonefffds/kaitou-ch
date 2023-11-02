@@ -20,7 +20,6 @@
    <p5-button>
       <p5-title content="不是" :animation="true" font_color="#ff0022" selected_font_color="#000" selected_bg_color="#ff0022" @click="postOption('No')"></p5-title>
    </p5-button>
-   <vue-recaptcha sitekey="recaptchaSiteKey" v-model="recaptchaToken"></vue-recaptcha>
 </div>
 </div>
 <div class="footer">
@@ -35,7 +34,6 @@
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
   import { P5Message,P5Notification } from 'p5-ui'
-
   export default {
   name: 'App',
   setup() {
@@ -55,7 +53,6 @@
           return;
         }
       }
-      const recaptchaToken = await this.$recaptcha('action_name');
       const data = {
           option: option
       };
