@@ -61,6 +61,7 @@
       try {
         await axios.post('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote', data);
         console.log(`Option ${option} posted successfully.`);
+        
         P5Message({ type: 'clear' })
         fetchData();
         const currentTime = new Date().getTime();
