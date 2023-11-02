@@ -41,7 +41,6 @@
   setup() {
     let progress = ref(0); // Declare progress here
     let percentage = ref(0);
-    const apiUrl = process.env.API_ENDPOINT;
 
     const postOption = async (option) => {
       const lastVoteTime = getCookie("LastVoteTime"); // Get the value of the "LastVoteTime" cookie
@@ -60,7 +59,7 @@
           option: option
       };
       try {
-        await axios.post(apiUrl, data);
+        await axios.post('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote', data);
         console.log(`Option ${option} posted successfully.`);
         P5Message({ type: 'clear' })
         fetchData();
@@ -88,7 +87,7 @@
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(apiUrl);
+        const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
         const data = response.data;
 
         const { Yes, No } = data;
