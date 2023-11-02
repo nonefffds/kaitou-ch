@@ -1,0 +1,5 @@
+{
+    "env": {
+      "API_ENDPOINT": "@API_ENDPOINT"
+    }
+  }
