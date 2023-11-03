@@ -26,7 +26,7 @@
       <p style="color: grey;" id="debug"></p>
       <!--<p style="color: grey;" id="date"></p>-->
       <p style="color: grey;">Powered by <a href="https://aws.amazon.com/">AWS Lambda & Amplify</a>, <a href="https://vuejs.org/">Vue.JS</a> & <a href="https://github.com/q-mona/p5-ui">p5-ui</a>. Maintained by <a href="http://MPAM-Lab.xyz">MPAM Lab</a>. </p>
-      <p style="color: grey;">Original Credit by (c)Atlus, SEGA</p>
+      <p style="color: grey;">This is a fan site. Original Credit by (c)Atlus, SEGA <a href="https://github.com/nonefffds/kaitou-ch">Open-sourced at GitHub</a></p>
     </div>
 </div>
 </template>
