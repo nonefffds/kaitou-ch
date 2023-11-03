@@ -11,4 +11,5 @@ Powered by AWS S3, Lambda(./Server), Amplify(prod. env), Vercel (test&dev env), 
 3. change the question by client's date automatically, also add current date (question reference: https://megamitensei.fandom.com/wiki/Phantom_Aficionado_Website#Persona_5_Royal)
 4. better UI I guess
 5. jpn & en support
-6. enrich this Readme (incl. Deployments etc.)
+6. divide CSS and JS to other documents
+7. enrich this Readme (incl. Deployments etc.)

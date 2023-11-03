@@ -218,6 +218,7 @@
   .footer {
   font-size: 10px;
   margin-top: 100px;
+  margin-bottom: 50px;
 }
   </style>
   
