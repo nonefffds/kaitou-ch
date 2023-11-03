@@ -110,6 +110,7 @@
         console.log('Progress:', percentage);
       } catch (error) {
         console.error('Error fetching data:', error);
+        P5Message({ type: 'fail' })
       }
     }
 
