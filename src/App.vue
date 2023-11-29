@@ -9,7 +9,8 @@
         <img class="wrap" src="./assets/Q.png">
         <div class="bar" id="bar"></div>
         <div class="question">
-          你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？
+          {{ $t("message.question") }}
+          <!--你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？-->
         </div>
         <span class="percent" id="percentage"></span>
       </div>
@@ -30,9 +31,8 @@
     </div>
 </div>
 </template>
-
   
-  <script>
+<script>
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
   import { P5Message } from 'p5-ui'
@@ -118,7 +118,7 @@
       onMounted(() => {
         fetchData()
       })
-  
+
       return {
         progress,
         percentage,
@@ -127,17 +127,17 @@
     }
   }
   </script>
-  
+
   <style>
   .wrapper {
   max-width: 1500px;
   padding: 0px;
   text-align: center;
-}
+  }
   @font-face {
   font-family: "Contrail One";
   src: url("./assets/ContrailOne-Regular.ttf");
-}
+  }
   .logo {
     width: 100px;
     margin: 0 auto;
@@ -148,7 +148,7 @@
     margin-top: 100px;
     padding: 0px;
   }
-  
+
   .poll {
     margin-left: auto;
     margin-right: auto;
@@ -157,11 +157,11 @@
     position: relative;
     left: -5%;
   }
-  
+
   .poll .wrap {
     width: 100%;
   }
-  
+
   .poll .bar {
     background-color: red;
     height: 40px;
@@ -171,7 +171,7 @@
     bottom: 10px;
     z-index: -1;
   }
-  
+
   .poll .percent {
     color: red;
     font-family: 'Contrail One';
@@ -181,21 +181,21 @@
     right: -70px;
     bottom: 5px;
   }
-  
+
   .bolt1 {
     height: 35px;
     position: absolute;
     top: -10px;
     left: 47%;
   }
-  
+
   .bolt2 {
     height: 35px;
     position: absolute;
     top: -30px;
     left: 56%;
   }
-  
+
   .question {
     font-size: 12px;
     font-family: test;
@@ -219,6 +219,5 @@
   font-size: 10px;
   margin-top: 100px;
   margin-bottom: 50px;
-}
+  }
   </style>
-  
