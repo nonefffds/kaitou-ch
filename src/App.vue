@@ -87,31 +87,35 @@
       const expires = "expires=" + d.toUTCString();
       document.cookie = name + "=" + value + ";" + expires + ";path=/";
     }
-    const changeQuestion = async () => {
-      //const question = document.getElementById("question");
+    const changeQuestion = () => {
+      // Get the current day of the year
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 0);
+      const diff = now - start + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+      const oneDay = 1000 * 60 * 60 * 24;
+      const dayOfYear = Math.floor(diff / oneDay);
       
-      // Change the question based on the date
-      const currentDate = new Date();
-      const currentYear = currentDate.getFullYear();
-
-      // Define the start and end dates for each question
+      // Define the questions and their day ranges for the year
       const questions = [
-      { start: new Date(currentYear, 1, 1), end: new Date(currentYear, 4, 14), text: '你会想<span style="color: red; font-size: 16px;">加入怪盗团</span>吗？' },
-      { start: new Date(currentYear, 4, 15), end: new Date(currentYear, 6, 10), text: '你相信<span style="color: red; font-size: 16px;">心灵怪盗</span>吗？'},
-      { start: new Date(currentYear, 6, 11), end: new Date(currentYear, 10, 28), text: '你认为怪盗团拥有<span style="color: red; font-size: 16px;">正义</span>吗？'},
-      { start: new Date(currentYear, 10, 29), end: new Date(currentYear, 12, 6), text: '你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？'},
-      { start: new Date(currentYear, 12, 7), end: new Date(currentYear, 12, 19), text: '你会<span style="color: red; font-size: 16px;">支持怪盗团</span>吗？'},
-      { start: new Date(currentYear, 12, 19), end: new Date(currentYear, 12, 31), text: '你认为怪盗团是<span style="color: red; font-size: 16px;"">真实存在</span>的吗？'},
+        { startDay: 1, endDay: 104, text: '你会想<span style="color: red; font-size: 16px;">加入怪盗团</span>吗？' },
+        { startDay: 105, endDay: 161, text: '你相信<span style="color: red; font-size: 16px;">心灵怪盗</span>吗？' },
+        { startDay: 162, endDay: 301, text: '你认为怪盗团拥有<span style="color: red; font-size: 16px;">正义</span>吗？' },
+        { startDay: 302, endDay: 340, text: '你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？' },
+        { startDay: 341, endDay: 353, text: '你会<span style="color: red; font-size: 16px;">支持怪盗团</span>吗？' },
+        { startDay: 354, endDay: 365, text: '你认为怪盗团是<span style="color: red; font-size: 16px;"">真实存在</span>的吗？' },
+        { startDay: 366, endDay: 366, text: '你认为怪盗团是<span style="color: red; font-size: 16px;"">真实存在</span>的吗？' }
       ];
-      // Find the current question
-      const currentQuestion = questions.find(q => currentDate >= q.start && currentDate <= q.end);
+
+      // Find the current question based on the day of the year
+      const currentQuestion = questions.find(q => dayOfYear >= q.startDay && dayOfYear <= q.endDay);
       if (currentQuestion) {
-        questionText.value = currentQuestion.text; // Update the reactive property
+        questionText.value = currentQuestion.text;
       } else {
-        // Handle case outside of defined questions
-        questionText.value = '你会想<span style="color: red; font-size: 16px;">加入怪盗团</span>吗？(fake)';
+        // Handle the case where the day of the year doesn't match any question range
+        questionText.value = '你认为怪盗团是<span style="color: red; font-size: 16px;"">真实存在</span>的吗(？)'; // Provide a default message for days without a question
       }
     }
+
     const fetchData = async () => {
       try {
         const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
