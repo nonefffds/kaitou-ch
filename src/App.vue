@@ -9,7 +9,7 @@
         <img class="wrap" src="./assets/Q.png">
         <div class="bar" id="bar"></div>
         <div class="question">
-          {{ $t("message.question") }}
+          <p v-html="questionText"></p>
           <!--你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？-->
         </div>
         <span class="percent" id="percentage"></span>
@@ -28,6 +28,7 @@
       <!--<p style="color: grey;" id="date"></p>-->
       <p style="color: grey;">Powered by <a href="https://aws.amazon.com/">AWS Lambda & Amplify</a>, <a href="https://vuejs.org/">Vue.JS</a> & <a href="https://github.com/q-mona/p5-ui">p5-ui</a>. Maintained by <a href="http://MPAM-Lab.xyz">MPAM Lab</a>. </p>
       <p style="color: grey;">This is a fan site. Original Credit by (c)Atlus, SEGA <a href="https://github.com/nonefffds/kaitou-ch">Open-sourced at GitHub</a></p>
+      <p style="color: grey;">This site uses cookie to count time for voting and will not be used in tracking users' identity.</p>    
     </div>
 </div>
 </template>
@@ -41,7 +42,8 @@
   setup() {
     let progress = ref(0); // Declare progress here
     let percentage = ref(0);
-
+    let questionText = ref('');
+    
     const postOption = async (option) => {
       const lastVoteTime = getCookie("LastVoteTime"); // Get the value of the "LastVoteTime" cookie
 
@@ -85,7 +87,31 @@
       const expires = "expires=" + d.toUTCString();
       document.cookie = name + "=" + value + ";" + expires + ";path=/";
     }
+    const changeQuestion = async () => {
+      //const question = document.getElementById("question");
+      
+      // Change the question based on the date
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear();
 
+      // Define the start and end dates for each question
+      const questions = [
+      { start: new Date(currentYear, 1, 1), end: new Date(currentYear, 4, 14), text: '你会想<span style="color: red; font-size: 16px;">加入怪盗团</span>吗？' },
+      { start: new Date(currentYear, 4, 15), end: new Date(currentYear, 6, 10), text: '你相信<span style="color: red; font-size: 16px;">心灵怪盗</span>吗？'},
+      { start: new Date(currentYear, 6, 11), end: new Date(currentYear, 10, 28), text: '你认为怪盗团拥有<span style="color: red; font-size: 16px;">正义</span>吗？'},
+      { start: new Date(currentYear, 10, 29), end: new Date(currentYear, 12, 6), text: '你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？'},
+      { start: new Date(currentYear, 12, 7), end: new Date(currentYear, 12, 19), text: '你会<span style="color: red; font-size: 16px;">支持怪盗团</span>吗？'},
+      { start: new Date(currentYear, 12, 19), end: new Date(currentYear, 12, 31), text: '你认为怪盗团是<span style="color: red; font-size: 16px;"">真实存在</span>的吗？'},
+      ];
+      // Find the current question
+      const currentQuestion = questions.find(q => currentDate >= q.start && currentDate <= q.end);
+      if (currentQuestion) {
+        questionText.value = currentQuestion.text; // Update the reactive property
+      } else {
+        // Handle case outside of defined questions
+        questionText.value = '你会想<span style="color: red; font-size: 16px;">加入怪盗团</span>吗？(fake)';
+      }
+    }
     const fetchData = async () => {
       try {
         const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
@@ -117,12 +143,14 @@
 
       onMounted(() => {
         fetchData()
+        changeQuestion()
       })
 
       return {
         progress,
         percentage,
-        postOption
+        postOption,
+        questionText
       }
     }
   }
