@@ -9,7 +9,8 @@
         <img class="wrap" src="./assets/Q.png">
         <div class="bar" id="bar"></div>
         <div class="question">
-          你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？
+          <p v-html="questionText"></p>
+          <!--你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？-->
         </div>
         <span class="percent" id="percentage"></span>
       </div>
@@ -27,12 +28,12 @@
       <!--<p style="color: grey;" id="date"></p>-->
       <p style="color: grey;">Powered by <a href="https://aws.amazon.com/">AWS Lambda & Amplify</a>, <a href="https://vuejs.org/">Vue.JS</a> & <a href="https://github.com/q-mona/p5-ui">p5-ui</a>. Maintained by <a href="http://MPAM-Lab.xyz">MPAM Lab</a>. </p>
       <p style="color: grey;">This is a fan site. Original Credit by (c)Atlus, SEGA <a href="https://github.com/nonefffds/kaitou-ch">Open-sourced at GitHub</a></p>
+      <p style="color: grey;">This site uses cookie to count time for voting and will not be used in tracking users' identity.</p>    
     </div>
 </div>
 </template>
-
   
-  <script>
+<script>
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
   import { P5Message } from 'p5-ui'
@@ -41,7 +42,8 @@
   setup() {
     let progress = ref(0); // Declare progress here
     let percentage = ref(0);
-
+    let questionText = ref('');
+    
     const postOption = async (option) => {
       const lastVoteTime = getCookie("LastVoteTime"); // Get the value of the "LastVoteTime" cookie
 
@@ -85,6 +87,34 @@
       const expires = "expires=" + d.toUTCString();
       document.cookie = name + "=" + value + ";" + expires + ";path=/";
     }
+    const changeQuestion = () => {
+      // Get the current day of the year
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 0);
+      const diff = now - start + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+      const oneDay = 1000 * 60 * 60 * 24;
+      const dayOfYear = Math.floor(diff / oneDay);
+      
+      // Define the questions and their day ranges for the year
+      const questions = [
+        { startDay: 1, endDay: 104, text: '你会想<span style="color: red; font-size: 16px;">加入怪盗团</span>吗？' },
+        { startDay: 105, endDay: 161, text: '你相信<span style="color: red; font-size: 16px;">心灵怪盗</span>吗？' },
+        { startDay: 162, endDay: 301, text: '你认为怪盗团拥有<span style="color: red; font-size: 16px;">正义</span>吗？' },
+        { startDay: 302, endDay: 340, text: '你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？' },
+        { startDay: 341, endDay: 353, text: '你会<span style="color: red; font-size: 16px;">支持怪盗团</span>吗？' },
+        { startDay: 354, endDay: 365, text: '你认为怪盗团是<span style="color: red; font-size: 16px;"">真实存在</span>的吗？' },
+        { startDay: 366, endDay: 366, text: '你认为怪盗团是<span style="color: red; font-size: 16px;"">真实存在</span>的吗？' }
+      ];
+
+      // Find the current question based on the day of the year
+      const currentQuestion = questions.find(q => dayOfYear >= q.startDay && dayOfYear <= q.endDay);
+      if (currentQuestion) {
+        questionText.value = currentQuestion.text;
+      } else {
+        // Handle the case where the day of the year doesn't match any question range
+        questionText.value = '你认为怪盗团是<span style="color: red; font-size: 16px;"">真实存在</span>的吗(？)'; // Provide a default message for days without a question
+      }
+    }
 
     const fetchData = async () => {
       try {
@@ -117,27 +147,29 @@
 
       onMounted(() => {
         fetchData()
+        changeQuestion()
       })
-  
+
       return {
         progress,
         percentage,
-        postOption
+        postOption,
+        questionText
       }
     }
   }
   </script>
-  
+
   <style>
   .wrapper {
   max-width: 1500px;
   padding: 0px;
   text-align: center;
-}
+  }
   @font-face {
   font-family: "Contrail One";
   src: url("./assets/ContrailOne-Regular.ttf");
-}
+  }
   .logo {
     width: 100px;
     margin: 0 auto;
@@ -148,7 +180,7 @@
     margin-top: 100px;
     padding: 0px;
   }
-  
+
   .poll {
     margin-left: auto;
     margin-right: auto;
@@ -157,11 +189,11 @@
     position: relative;
     left: -5%;
   }
-  
+
   .poll .wrap {
     width: 100%;
   }
-  
+
   .poll .bar {
     background-color: red;
     height: 40px;
@@ -171,7 +203,7 @@
     bottom: 10px;
     z-index: -1;
   }
-  
+
   .poll .percent {
     color: red;
     font-family: 'Contrail One';
@@ -181,21 +213,21 @@
     right: -70px;
     bottom: 5px;
   }
-  
+
   .bolt1 {
     height: 35px;
     position: absolute;
     top: -10px;
     left: 47%;
   }
-  
+
   .bolt2 {
     height: 35px;
     position: absolute;
     top: -30px;
     left: 56%;
   }
-  
+
   .question {
     font-size: 12px;
     font-family: test;
@@ -219,6 +251,5 @@
   font-size: 10px;
   margin-top: 100px;
   margin-bottom: 50px;
-}
+  }
   </style>
-  
