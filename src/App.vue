@@ -14,14 +14,14 @@
         </div>
         <span class="percent" id="percentage"></span>
       </div>
-<div class="buttons">
-   <p5-button>
-      <p5-title content="$t('buttons.yes')" :animation="true" font_color="#ff0022" selected_font_color="#000" _bg_color="#ff0022" @click="postOption('Yes')"></p5-title>
-   </p5-button>
-   <p5-button>
-      <p5-title content="$t('buttons.no')" :animation="true" font_color="#ff0022" selected_font_color="#000" selected_bg_color="#ff0022" @click="postOption('No')"></p5-title>
-   </p5-button>
-</div>
+      <div class="buttons">
+        <p5-button>
+          <p5-title :content="$t('buttons.yes')" :animation="true" font_color="#ff0022" selected_font_color="#000" _bg_color="#ff0022" @click="postOption('Yes')"></p5-title>
+        </p5-button>
+        <p5-button>
+          <p5-title :content="$t('buttons.no')" :animation="true" font_color="#ff0022" selected_font_color="#000" selected_bg_color="#ff0022" @click="postOption('No')"></p5-title>
+        </p5-button>
+  </div>
 </div>
 <div class="footer">
       <p style="color: grey;" id="debug"></p>
@@ -110,7 +110,7 @@
       ];
       const currentPeriod = questionPeriods.find(q => dayOfYear >= q.startDay && dayOfYear <= q.endDay);
       if (currentPeriod) {
-        questionText.value = t(currentPeriod.key); // Use the key to get the translated text
+        questionText.value = t(currentPeriod.text); // Use the key to get the translated text
       } else {
         // Handle the case where the day of the year doesn't match any question range
         questionText.value = t('question6'); // Provide a default message for days without a question
