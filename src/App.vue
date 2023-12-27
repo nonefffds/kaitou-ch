@@ -115,7 +115,7 @@
         // Handle the case where the day of the year doesn't match any question range
         questionText.value = tr('question6'); // Provide a default message for days without a question
       }
-    };
+    }
     const fetchData = async () => {
       try {
         const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
