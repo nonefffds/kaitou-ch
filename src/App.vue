@@ -44,7 +44,7 @@
     let progress = ref(0); // Declare progress here
     let percentage = ref(0);
     const { t } = useI18n();
-    const questionText = ref('');
+    let questionText = ref('');
     
     const postOption = async (option) => {
       const lastVoteTime = getCookie("LastVoteTime"); // Get the value of the "LastVoteTime" cookie
