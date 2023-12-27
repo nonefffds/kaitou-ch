@@ -34,7 +34,7 @@ const messages = {
   };
 // Create the i18n instance with the messages
 const i18n = createI18n({
-  locale: 'zh-cn', // Set default locale
+  locale: 'zh', // Set default locale
   fallbackLocale: 'en', // Set fallback locale
   messages, // Set the messages
 })

@@ -43,7 +43,7 @@
   setup() {
     let progress = ref(0); // Declare progress here
     let percentage = ref(0);
-    const { t } = useI18n();
+    const { tr } = useI18n();
     let questionText = ref('');
     
     const postOption = async (option) => {
@@ -110,10 +110,10 @@
       ];
       const currentPeriod = questionPeriods.find(q => dayOfYear >= q.startDay && dayOfYear <= q.endDay);
       if (currentPeriod) {
-        questionText.value = t(currentPeriod.text); // Use the key to get the translated text
+        questionText.value = tr(currentPeriod.text); // Use the key to get the translated text
       } else {
         // Handle the case where the day of the year doesn't match any question range
-        questionText.value = t('question6'); // Provide a default message for days without a question
+        questionText.value = tr('question6'); // Provide a default message for days without a question
       }
     };
     const fetchData = async () => {
