@@ -115,33 +115,7 @@
       document.cookie = name + "=" + value + ";" + expires + ";path=/";
     }
     const changeQuestion = () => {
-
-      // Get the current day of the year
-      const now = new Date();
-      const start = new Date(now.getFullYear(), 0, 0);
-      const diff = now - start + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
-      const oneDay = 1000 * 60 * 60 * 24;
-      const dayOfYear = Math.floor(diff / oneDay);
-
-      // Define the questions and their day ranges for the year
-      const questionPeriods = [
-        { startDay: 1, endDay: 104, text: 'question1' },
-        { startDay: 105, endDay: 161, text: 'question2'},
-        { startDay: 162, endDay: 301, text: 'question3'},
-        { startDay: 302, endDay: 340, text: 'question4' },
-        { startDay: 341, endDay: 353, text: 'question5'},
-        { startDay: 354, endDay: 365, text: 'question6' },
-        { startDay: 366, endDay: 366, text: 'question6' }
-      ];
-      const currentPeriod = questionPeriods.find(q => dayOfYear >= q.startDay && dayOfYear <= q.endDay);
-      if (currentPeriod) {
-        questionText.value = t(currentPeriod.text); // Use the key to get the translated text
-      } else {
-        // Handle the case where the day of the year doesn't match any question range
-        questionText.value = t('question6'); // Provide a default message for days without a question
-      }
-    }
-    const { t } = useI18n({
+      const { t } = useI18n({
       locale: 'zh',
       messages: {
         en: {
@@ -176,6 +150,33 @@
       fallbackLocale: 'en', // Set fallback locale
       messages, // Set the messages
     })
+
+      // Get the current day of the year
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 0);
+      const diff = now - start + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+      const oneDay = 1000 * 60 * 60 * 24;
+      const dayOfYear = Math.floor(diff / oneDay);
+
+      // Define the questions and their day ranges for the year
+      const questionPeriods = [
+        { startDay: 1, endDay: 104, text: 'question1' },
+        { startDay: 105, endDay: 161, text: 'question2'},
+        { startDay: 162, endDay: 301, text: 'question3'},
+        { startDay: 302, endDay: 340, text: 'question4' },
+        { startDay: 341, endDay: 353, text: 'question5'},
+        { startDay: 354, endDay: 365, text: 'question6' },
+        { startDay: 366, endDay: 366, text: 'question6' }
+      ];
+      const currentPeriod = questionPeriods.find(q => dayOfYear >= q.startDay && dayOfYear <= q.endDay);
+      if (currentPeriod) {
+        questionText.value = t(currentPeriod.text); // Use the key to get the translated text
+      } else {
+        // Handle the case where the day of the year doesn't match any question range
+        questionText.value = t('question6'); // Provide a default message for days without a question
+      }
+    }
+    
 
       onMounted(() => {
         fetchData()
