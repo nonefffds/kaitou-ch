@@ -10,7 +10,6 @@
         <div class="bar" id="bar"></div>
         <div class="question">
           <p v-html="questionText"></p>
-
         </div>
         <span class="percent" id="percentage"></span>
       </div>
@@ -43,7 +42,6 @@
   setup() {
     let progress = ref(0); // Declare progress here
     let percentage = ref(0);
-    const { tr } = useI18n();
     let questionText = ref('');
     
     const postOption = async (option) => {
@@ -72,6 +70,33 @@
         setCookie("LastVoteTime", currentTime, 1);
       } catch (error) {
         console.error('Error posting option:', error);
+        P5Message({ type: 'fail' })
+      }
+    }
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
+        const data = response.data;
+
+        const { Yes, No } = data;
+        progress.value = Math.floor(Yes / (Yes + No) * 100);
+        percentage = progress.value;
+
+        const numberDisplay = document.getElementById("percentage");
+        numberDisplay.innerHTML = percentage + "%";
+
+        const debugDisplay = document.getElementById("debug");
+        debugDisplay.innerHTML = "Yes: " + Yes + " No: " + No +",Total: " + (Yes + No);
+        // Get the div element with class "bar"
+        const barElement = document.getElementById("bar");
+
+        // Set the style properties of the div element
+        barElement.style.width = percentage + "%";
+        barElement.style.maxWidth = "220px";
+
+        console.log('Progress:', percentage);
+      } catch (error) {
+        console.error('Error fetching data:', error);
         P5Message({ type: 'fail' })
       }
     }
@@ -110,40 +135,47 @@
       ];
       const currentPeriod = questionPeriods.find(q => dayOfYear >= q.startDay && dayOfYear <= q.endDay);
       if (currentPeriod) {
-        questionText.value = tr(currentPeriod.text); // Use the key to get the translated text
+        questionText.value = t(currentPeriod.text); // Use the key to get the translated text
       } else {
         // Handle the case where the day of the year doesn't match any question range
-        questionText.value = tr('question6'); // Provide a default message for days without a question
+        questionText.value = t('question6'); // Provide a default message for days without a question
       }
     }
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
-        const data = response.data;
-
-        const { Yes, No } = data;
-        progress.value = Math.floor(Yes / (Yes + No) * 100);
-        percentage = progress.value;
-
-        const numberDisplay = document.getElementById("percentage");
-        numberDisplay.innerHTML = percentage + "%";
-
-        const debugDisplay = document.getElementById("debug");
-        debugDisplay.innerHTML = "Yes: " + Yes + " No: " + No +",Total: " + (Yes + No);
-        // Get the div element with class "bar"
-        const barElement = document.getElementById("bar");
-
-        // Set the style properties of the div element
-        barElement.style.width = percentage + "%";
-        barElement.style.maxWidth = "220px";
-
-        console.log('Progress:', percentage);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        P5Message({ type: 'fail' })
+    const { t } = useI18n({
+      locale: 'zh',
+      messages: {
+        en: {
+          question1: 'Would you <span style="color: red; font-size: 16px;">join the Phantom Thieves</span>?',
+          question2: 'Do you believe in the <span style="color: red; font-size: 16px;">Phantom Thieves?</span>',
+          question3: 'Are the Phantom Thieves <span style="color: red; font-size: 16px;">just?</span>',
+          question4: 'Are the Phantom Thieves <span style="color: red; font-size: 16px;">innocent?</span>',
+          question5: 'Do you <span style="color: red; font-size: 16px;">support</span> the Phantom Thieves?',
+          question6: 'Do the Phantom Thieves <span style="color: red; font-size: 16px;">really exist</span>?',
+          buttons: {
+              yes: 'Yes',
+              no: 'No'
+          }
+      },
+        zh: {
+          question1: '你会想<span style="color: red; font-size: 16px;">加入怪盗团</span>吗？',
+          question2: '你相信<span style="color: red; font-size: 16px;">心灵怪盗</span>吗？',
+          question3: '你认为怪盗团拥有<span style="color: red; font-size: 16px;">正义</span>吗？',
+          question4: '你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？',
+          question5: '你会<span style="color: red; font-size: 16px;">支持怪盗团</span>吗？',
+          question6: '你认为怪盗团是<span style="color: red; font-size: 16px;"">真实存在</span>的吗？',
+          buttons: {
+              yes: '是',
+              no: '不是'
+          }
+      }
       }
     }
-
+    )
+    const i18n = createI18n({
+      locale: 'zh', // Set default locale
+      fallbackLocale: 'en', // Set fallback locale
+      messages, // Set the messages
+    })
 
       onMounted(() => {
         fetchData()
@@ -154,7 +186,7 @@
         progress,
         percentage,
         postOption,
-        questionText
+        questionText,
       }
     }
   }
