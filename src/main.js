@@ -8,11 +8,7 @@ import { createI18n } from 'vue-i18n' // Import createI18n function
 import messages from './assets/messages';
 
 // Create the i18n instance with the messages
-const i18n = createI18n({
-  locale: 'zh', // Set default locale
-  fallbackLocale: 'en', // Set fallback locale
-  messages, // Set the messages
-})
+
 
 const app = createApp(App)
 app.use(P5UI)

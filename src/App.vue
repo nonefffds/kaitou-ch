@@ -37,12 +37,15 @@
   import axios from 'axios'
   import { P5Message } from 'p5-ui'
   import { useI18n } from 'vue-i18n';
+  import { createI18n } from 'vue-i18n' 
+  import messages from './assets/messages';
   export default {
   name: 'App',
   setup() {
     let progress = ref(0); // Declare progress here
     let percentage = ref(0);
     let questionText = ref('');
+    const { t } = useI18n();
     
     const postOption = async (option) => {
       const lastVoteTime = getCookie("LastVoteTime"); // Get the value of the "LastVoteTime" cookie
@@ -115,7 +118,6 @@
       document.cookie = name + "=" + value + ";" + expires + ";path=/";
     }
     const changeQuestion = () => {
-      const { t } = useI18n()
       // Get the current day of the year
       const now = new Date();
       const start = new Date(now.getFullYear(), 0, 0);
@@ -140,7 +142,14 @@
         // Handle the case where the day of the year doesn't match any question range
         questionText.value = t('questions.question6'); // Provide a default message for days without a question
       }
+
     }
+    const i18n = createI18n({
+        legacy: false,
+        locale: 'zh', // Set default locale
+        fallbackLocale: 'en', // Set fallback locale
+        messages, // Set the messages
+    })
     
 
       onMounted(() => {
