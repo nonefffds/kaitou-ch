@@ -144,12 +144,6 @@
       }
 
     }
-    const i18n = createI18n({
-        legacy: false,
-        locale: 'zh', // Set default locale
-        fallbackLocale: 'en', // Set fallback locale
-        messages, // Set the messages
-    })
     
 
       onMounted(() => {
