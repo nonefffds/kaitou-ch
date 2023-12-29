@@ -37,8 +37,6 @@
   import axios from 'axios'
   import { P5Message } from 'p5-ui'
   import { useI18n } from 'vue-i18n';
-  import { createI18n } from 'vue-i18n' 
-  import messages from './assets/messages';
   export default {
   name: 'App',
   setup() {
@@ -142,15 +140,11 @@
         // Handle the case where the day of the year doesn't match any question range
         questionText.value = t('questions.question6'); // Provide a default message for days without a question
       }
-
     }
-    
-
       onMounted(() => {
         fetchData()
         changeQuestion()
       })
-
       return {
         progress,
         percentage,
@@ -234,7 +228,7 @@
     font-family: test;
     color: white;
     position: absolute;
-    bottom: 42px;
+    bottom: 45px;
     left: 75px;
     -ms-transform: rotate(-7deg);
     -webkit-transform: rotate(-7deg);
