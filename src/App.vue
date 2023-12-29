@@ -10,18 +10,17 @@
         <div class="bar" id="bar"></div>
         <div class="question">
           <p v-html="questionText"></p>
-          <!--你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？-->
         </div>
         <span class="percent" id="percentage"></span>
       </div>
-<div class="buttons">
-   <p5-button>
-      <p5-title content="是" :animation="true" font_color="#ff0022" selected_font_color="#000" _bg_color="#ff0022" @click="postOption('Yes')"></p5-title>
-   </p5-button>
-   <p5-button>
-      <p5-title content="不是" :animation="true" font_color="#ff0022" selected_font_color="#000" selected_bg_color="#ff0022" @click="postOption('No')"></p5-title>
-   </p5-button>
-</div>
+      <div class="buttons">
+        <p5-button>
+          <p5-title :content="$t('buttons.yes')" :animation="true" font_color="#ff0022" selected_font_color="#000" _bg_color="#ff0022" @click="postOption('Yes')"></p5-title>
+        </p5-button>
+        <p5-button>
+          <p5-title :content="$t('buttons.no')" :animation="true" font_color="#ff0022" selected_font_color="#000" selected_bg_color="#ff0022" @click="postOption('No')"></p5-title>
+        </p5-button>
+  </div>
 </div>
 <div class="footer">
       <p style="color: grey;" id="debug"></p>
@@ -37,12 +36,14 @@
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
   import { P5Message } from 'p5-ui'
+  import { useI18n } from 'vue-i18n';
   export default {
   name: 'App',
   setup() {
     let progress = ref(0); // Declare progress here
     let percentage = ref(0);
     let questionText = ref('');
+    const { t } = useI18n();
     
     const postOption = async (option) => {
       const lastVoteTime = getCookie("LastVoteTime"); // Get the value of the "LastVoteTime" cookie
@@ -73,49 +74,6 @@
         P5Message({ type: 'fail' })
       }
     }
-    // Function to get the value of a cookie
-    function getCookie(name) {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop().split(';').shift();
-    }
-
-    // Function to set a cookie
-    function setCookie(name, value, minutes) {
-      const d = new Date();
-      d.setTime(d.getTime() + (minutes * 60 * 1000));
-      const expires = "expires=" + d.toUTCString();
-      document.cookie = name + "=" + value + ";" + expires + ";path=/";
-    }
-    const changeQuestion = () => {
-      // Get the current day of the year
-      const now = new Date();
-      const start = new Date(now.getFullYear(), 0, 0);
-      const diff = now - start + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
-      const oneDay = 1000 * 60 * 60 * 24;
-      const dayOfYear = Math.floor(diff / oneDay);
-      
-      // Define the questions and their day ranges for the year
-      const questions = [
-        { startDay: 1, endDay: 104, text: '你会想<span style="color: red; font-size: 16px;">加入怪盗团</span>吗？' },
-        { startDay: 105, endDay: 161, text: '你相信<span style="color: red; font-size: 16px;">心灵怪盗</span>吗？' },
-        { startDay: 162, endDay: 301, text: '你认为怪盗团拥有<span style="color: red; font-size: 16px;">正义</span>吗？' },
-        { startDay: 302, endDay: 340, text: '你认为怪盗团是<span style="color: red; font-size: 16px;">清白</span>的吗？' },
-        { startDay: 341, endDay: 353, text: '你会<span style="color: red; font-size: 16px;">支持怪盗团</span>吗？' },
-        { startDay: 354, endDay: 365, text: '你认为怪盗团是<span style="color: red; font-size: 16px;"">真实存在</span>的吗？' },
-        { startDay: 366, endDay: 366, text: '你认为怪盗团是<span style="color: red; font-size: 16px;"">真实存在</span>的吗？' }
-      ];
-
-      // Find the current question based on the day of the year
-      const currentQuestion = questions.find(q => dayOfYear >= q.startDay && dayOfYear <= q.endDay);
-      if (currentQuestion) {
-        questionText.value = currentQuestion.text;
-      } else {
-        // Handle the case where the day of the year doesn't match any question range
-        questionText.value = '你认为怪盗团是<span style="color: red; font-size: 16px;"">真实存在</span>的吗(？)'; // Provide a default message for days without a question
-      }
-    }
-
     const fetchData = async () => {
       try {
         const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
@@ -143,18 +101,55 @@
         P5Message({ type: 'fail' })
       }
     }
+    // Function to get the value of a cookie
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
 
+    // Function to set a cookie
+    function setCookie(name, value, minutes) {
+      const d = new Date();
+      d.setTime(d.getTime() + (minutes * 60 * 1000));
+      const expires = "expires=" + d.toUTCString();
+      document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+    const changeQuestion = () => {
+      // Get the current day of the year
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 0);
+      const diff = now - start + ((start.getTimezoneOffset() - now.getTimezoneOffset()) * 60 * 1000);
+      const oneDay = 1000 * 60 * 60 * 24;
+      const dayOfYear = Math.floor(diff / oneDay);
 
+      // Define the questions and their day ranges for the year
+      const questionPeriods = [
+        { startDay: 1, endDay: 104, text: 'questions.question1' },
+        { startDay: 105, endDay: 161, text: 'questions.question2'},
+        { startDay: 162, endDay: 301, text: 'questions.question3'},
+        { startDay: 302, endDay: 340, text: 'questions.question4' },
+        { startDay: 341, endDay: 353, text: 'questions.question5'},
+        { startDay: 354, endDay: 365, text: 'questions.question6' },
+        { startDay: 366, endDay: 366, text: 'questions.question6' }
+      ];
+      const currentPeriod = questionPeriods.find(q => dayOfYear >= q.startDay && dayOfYear <= q.endDay);
+      if (currentPeriod) {
+        questionText.value = t(currentPeriod.text); // Use the key to get the translated text
+      } else {
+        // Handle the case where the day of the year doesn't match any question range
+        questionText.value = t('questions.question6'); // Provide a default message for days without a question
+      }
+    }
       onMounted(() => {
         fetchData()
         changeQuestion()
       })
-
       return {
         progress,
         percentage,
         postOption,
-        questionText
+        questionText,
       }
     }
   }
@@ -187,7 +182,7 @@
     width: 300px;
     margin-top: 60px;
     position: relative;
-    left: -5%;
+    left: -10%;
   }
 
   .poll .wrap {
@@ -233,7 +228,7 @@
     font-family: test;
     color: white;
     position: absolute;
-    bottom: 42px;
+    bottom: 45px;
     left: 75px;
     -ms-transform: rotate(-7deg);
     -webkit-transform: rotate(-7deg);
