@@ -25,13 +25,13 @@
 <div class="footer">
       <p style="color: grey;" id="debug"></p>
       <!--<p style="color: grey;" id="date"></p>-->
-      <p style="color: grey;">Powered by <a href="https://aws.amazon.com/">AWS Lambda & Amplify</a>, <a href="https://vuejs.org/">Vue.JS</a> & <a href="https://github.com/q-mona/p5-ui">p5-ui</a>. Maintained by <a href="http://MPAM-Lab.xyz">MPAM Lab</a>. </p>
+      <p style="color: grey;">Powered by <a href="https://cloudflare.com">Cloudflare Pages, Worker, R2</a>, <a href="https://vuejs.org/">Vue.JS</a> & <a href="https://github.com/q-mona/p5-ui">p5-ui</a>. Maintained by <a href="http://MPAM-Lab.xyz">MPAM Lab</a>. </p>
       <p style="color: grey;">This is a fan site. Original Credit by (c)Atlus, SEGA <a href="https://github.com/nonefffds/kaitou-ch">Open-sourced at GitHub</a></p>
-      <p style="color: grey;">This site uses cookie to count time for voting and will not be used in tracking users' identity.</p>    
+      <p style="color: grey;">This site uses cookie to count time for voting and will not be used in tracking users' identity.</p>
     </div>
 </div>
 </template>
-  
+
 <script>
   import { ref, onMounted } from 'vue'
   import axios from 'axios'
@@ -44,6 +44,7 @@
     let percentage = ref(0);
     let questionText = ref('');
     const { t } = useI18n();
+    const workerUrl = '/api';
     
     const postOption = async (option) => {
       const lastVoteTime = getCookie("LastVoteTime"); // Get the value of the "LastVoteTime" cookie
@@ -62,9 +63,9 @@
           option: option
       };
       try {
-        await axios.post('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote', data);
+        await axios.post(workerUrl, data); // Use the workerUrl here
         console.log(`Option ${option} posted successfully.`);
-        
+
         P5Message({ type: 'clear' })
         fetchData();
         const currentTime = new Date().getTime();
@@ -76,7 +77,7 @@
     }
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://qezrh5rdak.execute-api.ap-northeast-1.amazonaws.com/default/phantom-vote');
+        const response = await axios.get(workerUrl); // Use the workerUrl here
         const data = response.data;
 
         const { Yes, No } = data;
