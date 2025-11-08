@@ -1,7 +1,7 @@
-const object_key = 'vote-count.json'; // R2 存储中的文件键名，请修改
-const allowedOrigins = ['https://kaitou-ch.site', '*']; // 允许的来源
+const object_key = 'vote-count.json'; 
+const allowedOrigins = ['https://kaitou-ch.site', '*']; 
 const r2BucketName = 'kaitou_ch';
-const targetOrigin = 'https://kaitou-ch.srt.pub'; // The domain that should be proxied to
+const targetOrigin = 'https://kaitou-ch.srt.pub'; 
 
 
 async function handleRequest(request, env, ctx) {
